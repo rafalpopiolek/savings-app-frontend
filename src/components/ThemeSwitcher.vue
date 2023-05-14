@@ -7,7 +7,7 @@
 
 <template>
     <a @click="toggleDark()"
-       class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-200 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white cursor-pointer rounded-md">
+       class="block px-4 py-2 text-sm text-gray-700 cursor-pointer">
         <slot/>
     </a>
 </template>

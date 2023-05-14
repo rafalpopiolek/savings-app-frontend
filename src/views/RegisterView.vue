@@ -14,7 +14,8 @@
     <div class="grid h-screen place-items-center bg-gray-100 dark:bg-gray-800">
         <div class="flex w-1/3 mx-auto flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-200 border border-gray-300 rounded-2xl dark:bg-gray-700 dark:border-gray-800">
 
-            <ThemeSwitcher class="flex justify-center mx-auto w-1/3 bg-gray-300 hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900">
+            <ThemeSwitcher
+                    class="flex justify-center mx-auto w-1/3 bg-gray-300 dark:bg-gray-800 hover:bg-blue-200 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white rounded-md">
                 Change Theme
             </ThemeSwitcher>
 
@@ -27,22 +28,24 @@
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form class="space-y-6" @submit.prevent="register">
                     <div>
-                        <label for="firstname" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
+                        <label for="firstname"
+                               class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
                             First name</label>
                         <div class="mt-2">
                             <input v-model="form.firstname" id="firstname" name="firstname" type="text" required
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-300"/>
+                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
                         </div>
                     </div>
 
                     <div>
-                        <label for="lastname" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">Last
+                        <label for="lastname"
+                               class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">Last
                             name</label>
                         <div class="mt-2">
                             <input v-model="form.lastname" id="lastname" name="lastname" type="text"
                                    autocomplete="email"
                                    required
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-300"/>
+                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
                         </div>
                     </div>
 
@@ -52,7 +55,7 @@
                         <div class="mt-2">
                             <input v-model="form.email" id="email" name="email" type="email" autocomplete="email"
                                    required
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-300"/>
+                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
                         </div>
                     </div>
 
@@ -64,7 +67,7 @@
                         <div class="mt-2">
                             <input v-model="form.password" id="password" name="password" type="password"
                                    autocomplete="current-password" required
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-300"/>
+                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
                         </div>
                     </div>
 

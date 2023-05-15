@@ -8,7 +8,7 @@
 
 <template>
 
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <nav class="bg-gray-50 dark:bg-gray-900 border-b-2 dark:border-y-gray-950 shadow-sm">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <Logo/>
 

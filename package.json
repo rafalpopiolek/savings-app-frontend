@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
+    "chart.js": "^4.3.0",
     "flowbite": "^1.6.5",
     "vue": "^3.2.47",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.0"
   },
   "devDependencies": {

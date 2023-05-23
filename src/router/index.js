@@ -3,6 +3,7 @@ import DefaultLayout from "../components/DefaultLayout.vue";
 import DashboardView from "../views/DashboardView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
+import {useUserStore} from "@/store/userStore.js";
 
 const routes = [
     {
@@ -33,6 +34,16 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+router.beforeEach(async (to) => {
+    const publicPages = ['/login', '/register'];
+    const authRequired = !publicPages.includes(to.path);
+    const auth = useUserStore();
+
+    if (authRequired && !auth.isAuthenticated()) {
+        return '/login';
+    }
 });
 
 export default router;

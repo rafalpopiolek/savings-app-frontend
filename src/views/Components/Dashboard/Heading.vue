@@ -4,7 +4,7 @@
 
 <template>
   <div
-      class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      class="block p-6 bg-white border border-gray-200 rounded-md shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
     <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mb-3">
       All your savings:
     </h1>

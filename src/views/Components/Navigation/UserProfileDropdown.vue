@@ -1,6 +1,6 @@
 <script setup>
     import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
-    import UserDefaultAvatar from "@/assets/images/default-user-avatar.png";
+    import UserDefaultAvatar from "@/../public/assets/images/default-user-avatar.png";
 </script>
 
 <template>

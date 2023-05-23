@@ -1,5 +1,5 @@
 <script setup>
-    import MoneyLogo from "@/assets/images/money-logo.svg";
+    import MoneyLogo from "@/../public/assets/images/money-logo.svg";
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 <script setup>
     import {reactive} from "vue";
     import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
+    import router from "@/router/index.js";
 
     const form = reactive({
         firstname: '',
@@ -8,14 +9,39 @@
         email: '',
         password: ''
     });
+
+    async function register() {
+        const response = await fetch("http://localhost:8080/api/v1/auth/register", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(form)
+        });
+
+        const data = await response.json();
+
+        console.log(response);
+        console.log(response.status);
+        console.log(data);
+
+        if (response.status !== 200) {
+            console.log("Status is not 200!");
+            // await router.push({name: "register"})
+        }
+
+        console.log("Status is 200!!!!")
+    }
 </script>
 
 <template>
     <div class="grid h-screen place-items-center bg-gray-100 dark:bg-gray-800">
-        <div class="flex w-1/3 mx-auto flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-200 border border-gray-300 rounded-2xl dark:bg-gray-700 dark:border-gray-800">
+        <div
+            class="flex w-1/3 mx-auto flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-200 border border-gray-300 rounded-2xl dark:bg-gray-700 dark:border-gray-800">
 
             <ThemeSwitcher
-                    class="flex justify-center mx-auto w-1/3 bg-gray-300 dark:bg-gray-800 hover:bg-blue-200 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white rounded-md">
+                class="flex justify-center mx-auto w-1/3 bg-gray-300 dark:bg-gray-800 hover:bg-blue-200 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white rounded-md">
                 Change Theme
             </ThemeSwitcher>
 

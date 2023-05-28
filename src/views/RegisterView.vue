@@ -1,7 +1,10 @@
 <script setup>
     import {reactive} from "vue";
     import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
+    import {useUserStore} from "@/store/userStore.js";
     import router from "@/router/index.js";
+
+    const userStore = useUserStore();
 
     const form = reactive({
         firstname: '',
@@ -22,16 +25,15 @@
 
         const data = await response.json();
 
-        console.log(response);
-        console.log(response.status);
-        console.log(data);
-
         if (response.status !== 200) {
             console.log("Status is not 200!");
-            // await router.push({name: "register"})
+            await router.push({name: "register"})
         }
 
-        console.log("Status is 200!!!!")
+        userStore.setToken(data.access_token);
+        userStore.setRefreshToken(data.refresh_token);
+
+        await router.push({name: "dashboard"});
     }
 </script>
 

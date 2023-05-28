@@ -11,6 +11,7 @@ export const useUserStore = defineStore('userStore', {
                     email: '',
                 },
                 token: localStorage.getItem('userToken'),
+                refreshToken: localStorage.getItem('userRefreshToken'),
             })
         }
     },
@@ -20,15 +21,23 @@ export const useUserStore = defineStore('userStore', {
             localStorage.setItem("userToken", token);
         },
 
+        setRefreshToken(refreshToken) {
+            this.user.refreshToken = refreshToken;
+            localStorage.setItem('userRefreshToken', refreshToken);
+        },
+
         removeToken() {
             this.user.token = null;
             localStorage.removeItem("userToken");
         },
 
-        setUser(data) {
-            this.user.data = {
+        removeRefreshToken() {
+            this.user.refreshToken = null;
+            localStorage.removeItem("userRefreshToken");
+        },
 
-            }
+        setUser(data) {
+            this.user.data = {}
         },
 
         isAuthenticated() {

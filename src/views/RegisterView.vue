@@ -26,7 +26,6 @@
         const data = await response.json();
 
         if (response.status !== 200) {
-            console.log("Status is not 200!");
             await router.push({name: "register"})
         }
 

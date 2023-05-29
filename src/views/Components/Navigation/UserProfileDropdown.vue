@@ -1,6 +1,29 @@
 <script setup>
+    import {Dropdown} from "flowbite";
     import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
     import UserDefaultAvatar from "@/assets/images/default-user-avatar.png";
+    import router from "@/router/index.js";
+    import {useUserStore} from "@/store/userStore.js";
+
+    const userStore = useUserStore();
+
+    async function logout() {
+        const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer " + userStore.user.token,
+            },
+            method: "POST",
+        });
+
+        if (response.status === 200) {
+            userStore.removeToken();
+            userStore.removeRefreshToken();
+
+            await router.push({name: "login"})
+        }
+    }
 </script>
 
 <template>
@@ -33,7 +56,7 @@
                 </ThemeSwitcher>
             </li>
             <li>
-                <a href="#"
+                <a @click="logout"
                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                     Sign out
                 </a>

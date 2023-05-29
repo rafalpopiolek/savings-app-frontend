@@ -1,19 +1,46 @@
 <script setup>
     import {reactive} from "vue";
     import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
+    import {useUserStore} from "@/store/userStore.js";
+    import router from "@/router/index.js";
+
+    const userStore = useUserStore();
 
     const form = reactive({
         email: '',
         password: ''
     });
+
+    async function login() {
+        const response = await fetch("http://localhost:8080/api/v1/auth/authenticate", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(form)
+        });
+
+        const data = await response.json();
+
+        if (response.status !== 200) {
+            await router.push({name: "login"})
+        }
+
+        userStore.setToken(data.access_token);
+        userStore.setRefreshToken(data.refresh_token);
+
+        await router.push({name: "dashboard"});
+    }
 </script>
 
 <template>
     <div class="grid h-screen place-items-center bg-gray-100 dark:bg-gray-800">
-        <div class="flex w-1/3 mx-auto flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-200 border border-gray-300 rounded-2xl dark:bg-gray-700 dark:border-gray-800">
+        <div
+            class="flex w-1/3 mx-auto flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-200 border border-gray-300 rounded-2xl dark:bg-gray-700 dark:border-gray-800">
 
             <ThemeSwitcher
-                    class="flex justify-center mx-auto w-1/3 bg-gray-300 dark:bg-gray-800 hover:bg-blue-200 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white rounded-md">
+                class="flex justify-center mx-auto w-1/3 bg-gray-300 dark:bg-gray-800 hover:bg-blue-200 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white rounded-md">
                 Change Theme
             </ThemeSwitcher>
 
@@ -23,7 +50,7 @@
                 </h2>
             </div>
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form class="space-y-6" @submit.prevent="">
+                <form class="space-y-6" @submit.prevent="login">
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
                             Email address

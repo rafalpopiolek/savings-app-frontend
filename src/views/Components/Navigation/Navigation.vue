@@ -1,5 +1,4 @@
 <script setup>
-    import {Dropdown} from "flowbite";
     import UserProfileDropdown from "@/views/Components/Navigation/UserProfileDropdown.vue";
     import Logo from "@/views/Components/Navigation/Logo.vue";
     import MobileMenuButton from "@/views/Components/Navigation/MobileMenuButton.vue";

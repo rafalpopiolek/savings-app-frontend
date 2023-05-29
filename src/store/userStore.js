@@ -10,25 +10,34 @@ export const useUserStore = defineStore('userStore', {
                     lastname: '',
                     email: '',
                 },
-                token: localStorage.getItem('userToken'),
+                token: localStorage.getItem('savings_token'),
+                refreshToken: localStorage.getItem('savings_refreshToken'),
             })
         }
     },
     actions: {
         setToken(token) {
             this.user.token = token;
-            localStorage.setItem("userToken", token);
+            localStorage.setItem("savings_token", token);
+        },
+
+        setRefreshToken(refreshToken) {
+            this.user.refreshToken = refreshToken;
+            localStorage.setItem('savings_refreshToken', refreshToken);
         },
 
         removeToken() {
             this.user.token = null;
-            localStorage.removeItem("userToken");
+            localStorage.removeItem("savings_token");
+        },
+
+        removeRefreshToken() {
+            this.user.refreshToken = null;
+            localStorage.removeItem("savings_refreshToken");
         },
 
         setUser(data) {
-            this.user.data = {
-
-            }
+            this.user.data = {}
         },
 
         isAuthenticated() {

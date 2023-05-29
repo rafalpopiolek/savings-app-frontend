@@ -1,13 +1,13 @@
 <script setup>
-    import MoneyLogo from "@/assets/images/money-logo.svg";
-    import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+    import {Disclosure, DisclosureButton, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
     import {Bars3Icon, XMarkIcon} from '@heroicons/vue/24/outline'
     import {useUserStore} from "@/store/userStore.js";
     import router from "@/router/index.js";
-    import {useThemeToggle} from "@/Composables/useThemeToggle.js";
+    import MobileNavigation from "@/views/Components/Navigation/MobileNavigation.vue";
+    import LogoAndMenu from "@/views/Components/Navigation/LogoAndMenu.vue";
+    import ThemeChangeIcons from "@/components/ThemeChangeIcons.vue";
 
     const userStore = useUserStore();
-    const {toggleDark} = useThemeToggle();
 
     async function logout() {
         const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
@@ -43,21 +43,11 @@
                     </DisclosureButton>
                 </div>
 
-                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                    <div class="flex flex-shrink-0 items-center">
-                        <img :src="MoneyLogo" class="h-8 mr-3" alt="Savings tracker Logo"/>
-                    </div>
-                    <div class="hidden sm:ml-6 sm:block">
-                        <div class="flex space-x-4">
-                            <RouterLink to="dashboard"
-                                        class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md px-3 py-2 text-sm font-medium hover:rounded-md">
-                                Home
-                            </RouterLink>
-                        </div>
-                    </div>
-                </div>
+                <LogoAndMenu/>
 
-                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
+                    <ThemeChangeIcons/>
+
                     <!-- Profile dropdown -->
                     <Menu as="div" class="relative ml-3">
                         <div>
@@ -79,14 +69,6 @@
                                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-white dark:border-gray-900">
 
                                 <MenuItem v-slot="{ active }">
-                                    <p @click="toggleDark()"
-                                       class="cursor-pointer"
-                                       :class="[active ? 'bg-gray-100 dark:bg-gray-900' : '', 'block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']">
-                                        Change theme
-                                    </p>
-                                </MenuItem>
-
-                                <MenuItem v-slot="{ active }">
                                     <a href="#" @click="logout"
                                        :class="[active ? 'bg-gray-100 dark:bg-gray-900' : '', 'block px-4 py-2 text-sm text-gray-700 dark:text-gray-300']">
                                         Sign out
@@ -99,13 +81,6 @@
             </div>
         </div>
 
-        <DisclosurePanel class="sm:hidden">
-            <div class="space-y-1 px-2 pb-3 pt-2">
-                <RouterLink to="dashboard"
-                            class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 block rounded-md px-3 py-2 text-base font-medium text-center">
-                    Home
-                </RouterLink>
-            </div>
-        </DisclosurePanel>
+        <MobileNavigation/>
     </Disclosure>
 </template>

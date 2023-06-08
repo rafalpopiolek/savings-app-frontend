@@ -1,5 +1,5 @@
 <script setup>
-    import {reactive} from "vue";
+    import {reactive, ref} from "vue";
     import {useUserStore} from "@/store/userStore.js";
     import router from "@/router/index.js";
     import ThemeChangeIcons from "@/components/ThemeChangeIcons.vue";
@@ -10,6 +10,8 @@
         email: '',
         password: ''
     });
+
+    const error = ref("");
 
     async function login() {
         const response = await fetch("http://localhost:8080/api/v1/auth/authenticate", {
@@ -24,7 +26,9 @@
         const data = await response.json();
 
         if (response.status !== 200) {
-            await router.push({name: "login"})
+            error.value = "Invalid credentials. Try again.";
+            form.password = "";
+            return;
         }
 
         userStore.setToken(data.access_token);
@@ -49,6 +53,9 @@
                 </h2>
             </div>
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+
+                <div v-if="error" class="text-center font-bold  mx-auto text-red-600 text-sm mb-4">{{ error }}</div>
+
                 <form class="space-y-6" @submit.prevent="login">
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
@@ -83,7 +90,7 @@
                     </div>
 
                     <div class="flex justify-end text-sm">
-                        <RouterLink class="text-blue-600 hover:text-blue-900 dark:text-indigo-500" to="register">
+                        <RouterLink class="text-blue-600 hover:text-blue-900 dark:text-indigo-400" to="register">
                             Don't have an account? Create one
                         </RouterLink>
                     </div>

@@ -6,6 +6,7 @@
     import MobileNavigation from "@/views/Components/Navigation/MobileNavigation.vue";
     import LogoAndMenu from "@/views/Components/Navigation/LogoAndMenu.vue";
     import ThemeChangeIcons from "@/components/ThemeChangeIcons.vue";
+    import AddSaving from "@/views/Components/Saving/AddSaving.vue";
 
     const userStore = useUserStore();
 
@@ -46,6 +47,8 @@
                 <LogoAndMenu/>
 
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
+                    <AddSaving/>
+
                     <ThemeChangeIcons/>
 
                     <!-- Profile dropdown -->

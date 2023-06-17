@@ -23,16 +23,11 @@
             body: JSON.stringify(form)
         });
 
-        const data = await response.json();
-
-        if (response.status !== 200) {
+        if (!response.ok) {
             await router.push({name: "register"})
         }
 
-        userStore.setToken(data.access_token);
-        userStore.setRefreshToken(data.refresh_token);
-
-        await router.push({name: "dashboard"});
+        await router.push({name: "login"});
     }
 </script>
 

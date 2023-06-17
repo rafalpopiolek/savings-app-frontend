@@ -36,17 +36,16 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, from) => {
-    const userAuthenticationPages = ['/login', '/register'];
-    const authRequired = !userAuthenticationPages.includes(to.path);
-    const auth = useUserStore();
+router.beforeEach(async (to) => {
+    const publicPages = ['/login', '/register'];
+    const authRequired = !publicPages.includes(to.path);
 
-    if (authRequired && !auth.isAuthenticated()) {
-        return '/login';
-    }
+    const user = useUserStore();
 
-    if (!authRequired && auth.isAuthenticated()) {
-        return from.path;
+    const userAuthenticated = user.isAuthenticated();
+
+    if (userAuthenticated === false && authRequired) {
+        return {name: 'login'};
     }
 });
 

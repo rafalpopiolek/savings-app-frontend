@@ -25,7 +25,9 @@
 
         const data = await response.json();
 
-        if (response.status !== 200) {
+        console.log(data)
+
+        if (!response.ok) {
             error.value = "Invalid credentials. Try again.";
             form.password = "";
             return;

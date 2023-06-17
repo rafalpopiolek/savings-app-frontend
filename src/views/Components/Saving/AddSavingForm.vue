@@ -1,6 +1,6 @@
 <script setup>
     import {useUserStore} from "@/store/userStore.js";
-    import {computed, onMounted, reactive, ref} from "vue";
+    import {computed, onMounted, ref} from "vue";
 
     const userStore = useUserStore();
 
@@ -64,7 +64,9 @@
                 <div>
                     <select id="asset" name="asset" autocomplete="asset-name" v-model="selectedType"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                        <option v-for="type in assetTypes" key="{{type.name}}">{{ type.name }}</option>
+                        <option v-for="type in assetTypes" key="{{type.name}}">
+                            {{ type.name }}
+                        </option>
                     </select>
                 </div>
             </div>
@@ -84,7 +86,7 @@
                 <div class="mt-2">
                     <div
                         class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        <input v-model="props.addSavingForm.Amount" type="number" name="amount" id="amount"
+                        <input v-model="props.addSavingForm.Amount" type="number" name="amount" id="amount" min="0"
                                autocomplete="amount"
                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                     </div>

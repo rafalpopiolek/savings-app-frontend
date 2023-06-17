@@ -5,6 +5,7 @@
     import ThemeChangeIcons from "@/components/ThemeChangeIcons.vue";
 
     const userStore = useUserStore();
+    const userDetails = ref([]);
 
     const form = reactive({
         email: '',
@@ -25,8 +26,6 @@
 
         const data = await response.json();
 
-        console.log(data)
-
         if (!response.ok) {
             error.value = "Invalid credentials. Try again.";
             form.password = "";
@@ -36,7 +35,25 @@
         userStore.setToken(data.access_token);
         userStore.setRefreshToken(data.refresh_token);
 
+        await getUserDetails();
+        userStore.setUser(userDetails.value);
+
         await router.push({name: "dashboard"});
+    }
+
+    async function getUserDetails() {
+        const response = await fetch("http://localhost:8080/api/v1/me", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer " + userStore.user.token,
+            },
+            method: "GET",
+        });
+
+        const data = await response.json();
+
+        userDetails.value = data;
     }
 </script>
 

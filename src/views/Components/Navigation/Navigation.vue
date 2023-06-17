@@ -20,7 +20,7 @@
             method: "POST",
         });
 
-        if (response.status === 200) {
+        if (response.ok) {
             userStore.removeToken();
             userStore.removeRefreshToken();
 

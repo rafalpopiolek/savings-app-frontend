@@ -31,13 +31,13 @@
 </script>
 
 <template>
-    <Heading/>
+    <Heading class="mb-10">All your savings:</Heading>
 
     <AssetBlock
         v-for="item in data" :key="item.assetCode"
         :name="item.assetName"
         :code="item.assetCode"
-        :total="item.amount"
+        :total="parseFloat(item.amount)"
     />
 
 </template>

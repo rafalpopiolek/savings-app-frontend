@@ -6,9 +6,10 @@ export const useUserStore = defineStore('userStore', {
         return {
             user: reactive({
                 data: {
+                    email: '',
                     firstname: '',
                     lastname: '',
-                    email: '',
+                    role: '',
                 },
                 token: localStorage.getItem('savings_token'),
                 refreshToken: localStorage.getItem('savings_refreshToken'),
@@ -37,11 +38,29 @@ export const useUserStore = defineStore('userStore', {
         },
 
         setUser(data) {
-            this.user.data = {}
+            this.user.data = data;
         },
 
         isAuthenticated() {
-            return this.user.token;
-        }
+            const token = this.user.token;
+
+            if (!token) {
+                return false;
+            }
+
+            const tokenPayload = this.parseJwt(token);
+
+            return tokenPayload.exp >= Date.now() / 1000;
+        },
+
+        parseJwt(token) {
+            let base64Url = token.split('.')[1];
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        },
     }
 });

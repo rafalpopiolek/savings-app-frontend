@@ -1,15 +1,18 @@
 <script setup>
-    import {reactive} from "vue";
-    import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
+    import {reactive, ref} from "vue";
     import {useUserStore} from "@/store/userStore.js";
     import router from "@/router/index.js";
+    import ThemeChangeIcons from "@/components/ThemeChangeIcons.vue";
 
     const userStore = useUserStore();
+    const userDetails = ref([]);
 
     const form = reactive({
         email: '',
         password: ''
     });
+
+    const error = ref("");
 
     async function login() {
         const response = await fetch("http://localhost:8080/api/v1/auth/authenticate", {
@@ -23,14 +26,34 @@
 
         const data = await response.json();
 
-        if (response.status !== 200) {
-            await router.push({name: "login"})
+        if (!response.ok) {
+            error.value = "Invalid credentials. Try again.";
+            form.password = "";
+            return;
         }
 
         userStore.setToken(data.access_token);
         userStore.setRefreshToken(data.refresh_token);
 
+        await getUserDetails();
+        userStore.setUser(userDetails.value);
+
         await router.push({name: "dashboard"});
+    }
+
+    async function getUserDetails() {
+        const response = await fetch("http://localhost:8080/api/v1/me", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer " + userStore.user.token,
+            },
+            method: "GET",
+        });
+
+        const data = await response.json();
+
+        userDetails.value = data;
     }
 </script>
 
@@ -39,10 +62,9 @@
         <div
             class="flex w-1/3 mx-auto flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-200 border border-gray-300 rounded-2xl dark:bg-gray-700 dark:border-gray-800">
 
-            <ThemeSwitcher
-                class="flex justify-center mx-auto w-1/3 bg-gray-300 dark:bg-gray-800 hover:bg-blue-200 dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white rounded-md">
-                Change Theme
-            </ThemeSwitcher>
+            <div class="flex justify-end text-gray-900 dark:text-gray-300">
+                <ThemeChangeIcons/>
+            </div>
 
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-300">
@@ -50,6 +72,9 @@
                 </h2>
             </div>
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+
+                <div v-if="error" class="text-center font-bold  mx-auto text-red-600 text-sm mb-4">{{ error }}</div>
+
                 <form class="space-y-6" @submit.prevent="login">
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
@@ -58,7 +83,7 @@
                         <div class="mt-2">
                             <input v-model="form.email" id="email" name="email" type="email" autocomplete="email"
                                    required=""
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
+                                   class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
                         </div>
                     </div>
 
@@ -72,7 +97,7 @@
                         <div class="mt-2">
                             <input v-model="form.password" id="password" name="password" type="password"
                                    autocomplete="current-password" required=""
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
+                                   class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-0 dark:bg-gray-200"/>
                         </div>
                     </div>
 
@@ -84,7 +109,7 @@
                     </div>
 
                     <div class="flex justify-end text-sm">
-                        <RouterLink class="text-blue-600 hover:text-blue-900 dark:text-indigo-500" to="register">
+                        <RouterLink class="text-blue-600 hover:text-blue-900 dark:text-indigo-400" to="register">
                             Don't have an account? Create one
                         </RouterLink>
                     </div>

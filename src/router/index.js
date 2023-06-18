@@ -4,6 +4,7 @@ import DashboardView from "../views/DashboardView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import {useUserStore} from "@/store/userStore.js";
+import ChartsView from "@/views/ChartsView.vue";
 
 const routes = [
     {
@@ -16,6 +17,11 @@ const routes = [
                 path: '/dashboard',
                 name: 'dashboard',
                 component: DashboardView
+            },
+            {
+                path: '/charts',
+                name: 'charts',
+                component: ChartsView
             }
         ],
     },
@@ -39,10 +45,13 @@ const router = createRouter({
 router.beforeEach(async (to) => {
     const publicPages = ['/login', '/register'];
     const authRequired = !publicPages.includes(to.path);
-    const auth = useUserStore();
 
-    if (authRequired && !auth.isAuthenticated()) {
-        return '/login';
+    const user = useUserStore();
+
+    const userAuthenticated = user.isAuthenticated();
+
+    if (userAuthenticated === false && authRequired) {
+        return {name: 'login'};
     }
 });
 

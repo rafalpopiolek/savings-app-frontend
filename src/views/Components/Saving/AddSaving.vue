@@ -59,7 +59,7 @@
         <template v-slot:button>
             <button
                 @click="addSaving"
-                class="text-black dark:text-gray-200 mt-8 bg-sky-300 hover:bg-sky-500 dark:bg-sky-600 dark:hover:bg-sky-400 rounded-md py-2 px-6">
+                class="w-full md:w-1/2 text-center text-black dark:text-gray-200 mt-8 bg-sky-300 hover:bg-sky-500 dark:bg-sky-600 dark:hover:bg-sky-400 rounded-md py-2 px-6">
                 Add
             </button>
         </template>

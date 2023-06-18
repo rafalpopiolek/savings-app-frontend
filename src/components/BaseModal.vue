@@ -1,5 +1,4 @@
 <script setup>
-
     defineProps({
         modalActive: {
             type: Boolean,
@@ -10,7 +9,7 @@
 </script>
 
 <template>
-    <div v-show="modalActive" class="absolute w-full h-screen top-0 left-0 flex justify-center px-8">
+    <div v-show="modalActive" class="fixed w-full h-screen top-0 left-0 flex justify-center px-8">
         <div v-if="modalActive" @keydown.esc="$emit('close-modal')"
              class="p-12 bg-gray-200 dark:bg-gray-900 dark:text-gray-300 self-start mt-32 max-w-screen-md rounded-lg border border-gray-300 dark:border-gray-950 overflow-y-auto"
              style="max-height: 80vh;">

@@ -3,7 +3,6 @@
     import {computed, onMounted, reactive, ref} from "vue";
     import Heading from "@/views/Components/Dashboard/Heading.vue";
     import {Chart} from "chart.js/auto";
-    import {data} from "autoprefixer";
 
     const userStore = useUserStore();
 
@@ -62,6 +61,11 @@
     async function generateChart() {
         const chartData = await fetchData(selectedAsset.value);
 
+        if (chartData === null) {
+            alert("Sorry. No data available right now.")
+            return;
+        }
+
         const ctx = document.getElementById('chart');
         const options = {month: 'long', day: 'numeric'};
         const labels = chartData.map(i => i.data);
@@ -118,9 +122,11 @@
             method: "GET",
         });
 
-        if (response.ok) {
-            return await response.json();
+        if (!response.ok) {
+            return null;
         }
+
+        return await response.json();
     }
 </script>
 

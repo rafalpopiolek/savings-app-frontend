@@ -18,6 +18,14 @@
         total: {
             type: Number,
             required: true,
+        },
+        exchangeRate: {
+            type: Number,
+            required: true,
+        },
+        valuePLN: {
+            type: Number,
+            required: true,
         }
     });
 
@@ -56,8 +64,6 @@
             body: JSON.stringify(newData)
         });
 
-        console.log(response);
-
         if (response.ok) {
             toggleModal();
             window.dispatchEvent(new Event('savings-updated'));
@@ -70,11 +76,16 @@
         class="block w-3/4 mx-auto mb-5 p-3 bg-gray-200 border border-gray-300 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
         <div class="flex justify-between font-bold tracking-tight dark:text-white">
             <div>
-                <div class="text-2xl text-gray-700 dark:text-gray-300">
-                    {{ props.name.charAt(0).toUpperCase() + props.name.slice(1) }}
-                    <span>({{ props.code }})</span>
+                <div class="text-2xl text-gray-700 dark:text-gray-300 mb-1">
+                    <span>{{ props.name.charAt(0).toUpperCase() + props.name.slice(1) }}</span>
                 </div>
-                <div class="text-xl text-gray-700 dark:text-gray-300">Amount: {{ props.total }}</div>
+                <div class="text-md text-gray-700 dark:text-gray-300 mb-1">
+                    <span>Amount: {{ props.total }} {{ props.code }}</span>
+                    <span class="ml-2 text-gray-400">({{ props.valuePLN.toFixed(2) }} PLN)</span>
+                </div>
+                <div class="text-md text-gray-700 dark:text-gray-300">
+                    Exchange Rate: {{ props.exchangeRate.toFixed(2) }}
+                </div>
             </div>
             <div class="flex items-center space-x-2">
                 <div title="Edit" @click="toggleModal">
@@ -103,7 +114,7 @@
 
         <template v-slot:button>
             <button @click="updateSaving"
-                class="text-black dark:text-gray-200 mt-8 bg-sky-300 hover:bg-sky-500 dark:bg-sky-600 dark:hover:bg-sky-400 rounded-md py-2 px-6">
+                    class="text-black dark:text-gray-200 mt-8 bg-sky-300 hover:bg-sky-500 dark:bg-sky-600 dark:hover:bg-sky-400 rounded-md py-2 px-6">
                 Save
             </button>
         </template>

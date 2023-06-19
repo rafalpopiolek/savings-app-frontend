@@ -69,6 +69,25 @@
             window.dispatchEvent(new Event('savings-updated'));
         }
     }
+
+    async function deleteItem() {
+        if (!confirm("Are you sure?")) {
+            return;
+        }
+
+        const response = await fetch(`http://localhost:8080/api/v1/saving/${props.code}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer " + userStore.user.token,
+            },
+            method: "DELETE",
+        });
+        console.log(response)
+        if (response.ok) {
+            window.dispatchEvent(new Event('savings-updated'));
+        }
+    }
 </script>
 
 <template>
@@ -97,7 +116,7 @@
                     </svg>
                 </div>
 
-                <div title="Delete">
+                <div title="Delete" @click="deleteItem">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                          stroke="currentColor"
                          class="w-6 h-6 text-red-400 hover:text-red-500 cursor-pointer hover:fill-red-400">

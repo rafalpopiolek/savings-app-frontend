@@ -157,7 +157,7 @@
             <div v-if="assetChosen">
                 <div class="mt-2">
                     <div @click="generateChart"
-                         class="w-full text-center bg-sky-800 rounded-md px-5 py-3 text-gray-100 hover:bg-sky-600">
+                         class="w-full text-center bg-sky-800 rounded-md px-5 py-3 text-gray-100 hover:bg-sky-600 cursor-pointer">
                         Generate Chart
                     </div>
                 </div>
